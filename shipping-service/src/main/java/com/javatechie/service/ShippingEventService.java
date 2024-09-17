@@ -15,9 +15,13 @@ public class ShippingEventService {
     @Autowired
     private OrderEventRepository repository;
 
+    public ShippingEventService(OrderEventRepository repository) {
+        this.repository = repository;
+    }
+
 
     @KafkaListener(topics = "order-events", groupId = "shipping-service")
-    public void consumeOrderEvent(OrderEvent orderEvent) {
+    public void consumeOrderEvent(  OrderEvent orderEvent) {
         if (orderEvent.getStatus().equals(OrderStatus.CONFIRMED)) {
             // Automatically ship after order confirmation
             shipOrder(orderEvent.getOrderId());
@@ -29,6 +33,7 @@ public class ShippingEventService {
     public void shipOrder(String orderId) {
         OrderEvent orderEvent = new OrderEvent(orderId, OrderStatus.SHIPPED, "Order Shipped successfully", LocalDateTime.now());
         repository.save(orderEvent);
+
     }
 
     // Deliver the order

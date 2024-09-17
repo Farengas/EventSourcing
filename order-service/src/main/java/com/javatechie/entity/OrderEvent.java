@@ -1,21 +1,25 @@
 package com.javatechie.entity;
 
 import com.javatechie.dto.enums.OrderStatus;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+
+
 
 import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "OrderEvents")
+@Table(name =  "order_events")
+@Entity
 public class OrderEvent {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String orderId;
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;  // CREATED, CONFIRMED
     private String details;
     private LocalDateTime eventTimestamp;

@@ -1,7 +1,8 @@
 package com.javatechie.repository;
 
 import com.javatechie.entity.OrderEvent;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface OrderEventRepository extends MongoRepository<OrderEvent,String> {
+
+public interface OrderEventRepository extends JpaRepository<OrderEvent,Long> {
 }
